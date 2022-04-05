@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  webserver:
+    container_name: ${WEB_CONTAINER_NAME}
+    image: ${PHP_IMAGE}
+    ports:
+      - ${HOST_PORT_WEB}:80
+    links:
+      - database
+    volumes:
+      - "./www:/var/www/html"
+      - "./config/php.ini:/usr/local/php/php.ini"
+
+  database:
+    container_name: ${DB_CONTAINER_NAME}
+    image: ${DB_IMAGE}
+    ports: 
+      - ${HOST_PORT_SQL}:3306
+    volumes:
+      - db-volume:/var/lib/mysql
+    environment:
+      TZ: ${MYSQL_TIMEZONE}"Australia/Brisbane"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+
+volumes:
+  db-volume:
