@@ -3,7 +3,7 @@ version: '3.7'
 services:
   webserver:
     build:
-      context: ./versions/php8
+      context: ./versions/php7.4
     container_name: ${WEB_CONTAINER_NAME}
     # image: ${PHP_IMAGE}
     ports:
@@ -17,7 +17,7 @@ services:
   database:
     container_name: ${DB_CONTAINER_NAME}
     image: ${DB_IMAGE}
-    ports: 
+    ports:
       - ${HOST_PORT_SQL}:3306
     volumes:
       - db-volume:/var/lib/mysql
@@ -28,6 +28,15 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+
+  mssql:
+    container_name: ${MSSQL_CONTAINER_NAME}
+    image: ${MSSQL_IMAGE}
+    ports:
+      - ${HOST_PORT_MSSQL}:${HOST_PORT_MSSQL}
+    environment:
+      SA_PASSWORD: ${MSSQL_ROOT_PASSWORD}
+      ACCEPT_EULA: "Y"
 
 volumes:
   db-volume:

@@ -1,4 +1,4 @@
-FROM php:8.0.10-apache-buster
+FROM php:7.4.0-apache-buster
 
 # Stop debconf error in interactive mode
 # https://github.com/moby/moby/issues/4032#issuecomment-192327844
@@ -49,19 +49,19 @@ RUN apt-get update && \
 # Workarround until imagick is available in pecl with php8 support
 # Imagick Commit to install
 # https://github.com/Imagick/imagick
-ARG IMAGICK_COMMIT="132a11fd26675db9eb9f0e9a3e2887c161875206"
+# ARG IMAGICK_COMMIT="132a11fd26675db9eb9f0e9a3e2887c161875206"
 
-RUN cd /usr/local/src && \
-    git clone https://github.com/Imagick/imagick && \
-    cd imagick && \
-    git checkout ${IMAGICK_COMMIT} && \
-    phpize && \
-    ./configure && \
-    make && \
-    make install && \
-    cd .. && \
-    rm -rf imagick && \
-    docker-php-ext-enable imagick
+# RUN cd /usr/local/src && \
+# git clone https://github.com/Imagick/imagick && \
+# cd imagick && \
+# git checkout ${IMAGICK_COMMIT} && \
+# phpize && \
+# ./configure && \
+# make && \
+# make install && \
+# cd .. && \
+# rm -rf imagick && \
+# docker-php-ext-enable imagick
 
 # Other PHP8 Extensions
 
@@ -75,7 +75,8 @@ RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install mbstring && \
     docker-php-ext-install gettext && \
     docker-php-ext-install calendar && \
-    docker-php-ext-install exif
+    docker-php-ext-install exif \
+    docker-php-ext-enable imagick
 
 
 # Install Freetype 
