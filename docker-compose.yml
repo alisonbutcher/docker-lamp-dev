@@ -31,12 +31,16 @@ services:
 
   mssql:
     container_name: ${MSSQL_CONTAINER_NAME}
+    hostname: "mssql"
     image: ${MSSQL_IMAGE}
     ports:
       - ${HOST_PORT_MSSQL}:${HOST_PORT_MSSQL}
     environment:
       SA_PASSWORD: ${MSSQL_ROOT_PASSWORD}
       ACCEPT_EULA: "Y"
+    volumes:
+      - mssql-volume1:/var/opt/mssql
 
 volumes:
   db-volume:
+  mssql-volume1:
